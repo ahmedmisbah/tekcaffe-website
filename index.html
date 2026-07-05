@@ -9,7 +9,7 @@
 <!-- ═══ CONFIG — edit these two lines ═══════════════════════════════ -->
 <script>
   const CONTACT_EMAIL = "sales@tekcaffe.com";
-  const CALENDLY_URL  = "https://calendly.com/ahmedmisbah/book-an-appointment";  /* TODO: paste your Calendly link here, e.g. "https://calendly.com/tekcaffe/intro" */
+  const CALENDLY_URL  = "https://calendly.com/ahmedmisbah/book-an-appointment";
   const YOUTUBE_URL   = "https://www.youtube.com/playlist?list=PLQyfTtXmGOZeOiJZCA6fryQKBdO2bQOYN";  /* Tek Caffe Podcast playlist — replace with channel URL if preferred */
 </script>
 <!-- ══════════════════════════════════════════════════════════════════ -->
@@ -62,9 +62,11 @@
   .lang-toggle:hover{background:#fff;color:var(--navy)}
   /* Calendly modal */
   .modal{position:fixed;inset:0;background:rgba(0,10,40,.75);display:none;align-items:center;justify-content:center;padding:1rem;z-index:10}
+  @media (max-width:640px){.modal{padding:.4rem}.modal-box{height:96vh;border-radius:12px}}
   .modal.open{display:flex}
-  .modal-box{background:#fff;border-radius:16px;width:min(920px,100%);height:min(700px,90vh);position:relative;overflow:hidden}
-  .modal-box iframe{width:100%;height:100%;border:0}
+  .modal-box{background:#fff;border-radius:16px;width:min(1000px,100%);height:90vh;min-height:560px;position:relative;overflow:hidden}
+  .modal-box iframe{width:100%;height:100%;border:0;display:block}
+  #calMount{height:100%}
   .modal-close{position:absolute;top:.5rem;inset-inline-end:.5rem;border:0;background:var(--navy);color:#fff;
     border-radius:50%;width:36px;height:36px;font-size:1.1rem;cursor:pointer;z-index:1}
   .modal-fallback{display:flex;height:100%;align-items:center;justify-content:center;color:var(--navy);padding:2rem;text-align:center}
@@ -136,7 +138,12 @@
     const mount = document.getElementById("calMount");
     if (CALENDLY_URL) {
       mount.classList.remove("modal-fallback");
-      mount.innerHTML = '<iframe src="' + CALENDLY_URL + '" title="Calendly scheduler" loading="lazy"></iframe>';
+      // Calendly inline-embed params: correct internal sizing + hides cookie banner
+      const host = (location.hostname && location.protocol.startsWith("http")) ? location.hostname : "tekcaffe.com";
+      const url = CALENDLY_URL + (CALENDLY_URL.includes("?") ? "&" : "?")
+        + "embed_domain=" + encodeURIComponent(host)
+        + "&embed_type=Inline&hide_gdpr_banner=1&primary_color=8A0096";
+      mount.innerHTML = '<iframe src="' + url + '" title="Calendly scheduler" loading="lazy"></iframe>';
     } else {
       /* Placeholder until the Calendly link is configured at the top of this file */
       mount.innerHTML = LANG === "ar"
