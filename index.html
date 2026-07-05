@@ -10,6 +10,7 @@
 <script>
   const CONTACT_EMAIL = "sales@tekcaffe.com";
   const CALENDLY_URL  = "https://calendly.com/ahmedmisbah/book-an-appointment";  /* TODO: paste your Calendly link here, e.g. "https://calendly.com/tekcaffe/intro" */
+  const YOUTUBE_URL   = "https://www.youtube.com/playlist?list=PLQyfTtXmGOZeOiJZCA6fryQKBdO2bQOYN";  /* Tek Caffe Podcast playlist — replace with channel URL if preferred */
 </script>
 <!-- ══════════════════════════════════════════════════════════════════ -->
 <link rel="icon" type="image/png" href="favicon.png">
@@ -90,6 +91,8 @@
        data-en="Email us" data-ar="راسلنا بالبريد">Email us</a>
     <button class="btn btn-outline" id="calBtn" onclick="openCalendly()"
        data-en="Book a call" data-ar="احجز مكالمة">Book a call</button>
+    <a class="btn btn-outline" id="ytBtn" href="#" target="_blank" rel="noopener"
+       data-en="▶ Watch the podcast" data-ar="▶ شاهد البودكاست">▶ Watch the podcast</a>
   </div>
 
   <p class="email-line">
@@ -99,8 +102,8 @@
 
   <footer>
     © <span id="yr"></span> Tek Caffe ·
-    <a href="https://www.linkedin.com/company/tek-caffe">LinkedIn</a>
-    <!-- TODO: add YouTube channel link when provided -->
+    <a href="https://www.linkedin.com/company/tek-caffe">LinkedIn</a> ·
+    <a id="ytFooter" href="#" target="_blank" rel="noopener">YouTube</a>
   </footer>
 </div>
 
@@ -113,6 +116,8 @@
 
 <script>
   document.getElementById("yr").textContent = new Date().getFullYear();
+  document.getElementById("ytBtn").href = YOUTUBE_URL;
+  document.getElementById("ytFooter").href = YOUTUBE_URL;
   document.getElementById("emailBtn").href = "mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent("Hello Tek Caffe");
   const et = document.getElementById("emailText");
   et.href = "mailto:" + CONTACT_EMAIL; et.textContent = CONTACT_EMAIL;
